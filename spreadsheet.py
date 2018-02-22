@@ -7,12 +7,11 @@ from oauth2client.service_account import ServiceAccountCredentials
 def main():
     pp = pprint.PrettyPrinter()
     heroes_data = get_heroes_stats()
-    stats = hero_stats(heroes_data, 'Abel')
-    #stats_max = stats['40']['5']
-    #all_attack = stats_max.get('atk')
-    #pp.pprint(all_attack[2])
+    name = input("Name of hero: ")
+    boon = input("Boon(default = neutral): ")
+    bane = input("bane(default = neutral): ")
+    stats = hero_stats(heroes_data, name, boon, bane)
     pp.pprint(stats)
-    #pprint(stats['40']['5']['atk'].values())
 
 def get_heroes_stats():
     json_data = open('stats.json').read()

@@ -7,8 +7,12 @@ from oauth2client.service_account import ServiceAccountCredentials
 def main():
     pp = pprint.PrettyPrinter()
     heroes_data = get_heroes_stats()
-    stats = hero_stats(heroes_data, 'Abel')
-    pp.pprint(stats['40']['5'])
+    stats = hero_stats(heroes_data, 'Abel', 'atk', 'def')
+    #stats_max = stats['40']['5']
+    #all_attack = stats_max.get('atk')
+    #pp.pprint(all_attack[2])
+    pp.pprint(stats)
+    #pprint(stats['40']['5']['atk'].values())
 
 def get_heroes_stats():
     json_data = open('stats.json').read()
@@ -30,9 +34,23 @@ def spreadsheet_work():
     index = 6
     sheet.insert_row(row, index)
 
-def hero_stats(data, name):
+def hero_stats(data, name, boon, bane):
     hero = data[name]
-    return hero['stats']
+    hero_stats = hero['stats']['40']['5']
+    boon_hero_stats = hero_stats[boon]
+    bane_hero_stats = hero_stats[bane]
+
+    # Change stats of Boon and Bane
+    boon_stat = int(boon_hero_stats[2])
+    bane_stat = int(bane_hero_stats[0])
+    hero_stats[boon] = boon_stat
+    hero_stats[bane] = bane_stat
+
+    # Rest of the stats Neutral
+    for k, v in hero_stats.items():
+        if type(v) is list:
+            hero_stats[k] = v[1]
+    return hero_stats
 
 if __name__ == '__main__':
     main()

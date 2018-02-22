@@ -5,7 +5,10 @@ import pprint
 from oauth2client.service_account import ServiceAccountCredentials
 
 def main():
+    pp = pprint.PrettyPrinter()
     heroes_data = get_heroes_stats()
+    stats = hero_stats(heroes_data, 'Abel')
+    pp.pprint(stats['40']['5'])
 
 def get_heroes_stats():
     json_data = open('stats.json').read()
@@ -26,6 +29,10 @@ def spreadsheet_work():
     row = ["5", "Test", "1", "2", "3", "4", "5", "6", "7"]
     index = 6
     sheet.insert_row(row, index)
+
+def hero_stats(data, name):
+    hero = data[name]
+    return hero['stats']
 
 if __name__ == '__main__':
     main()

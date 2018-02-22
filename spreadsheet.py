@@ -13,7 +13,7 @@ def main():
     bane = input("bane(default = neutral): ")
     stats = hero_stats(heroes_data, name, boon, bane)
     list_stats = list(stats.values())
-    list_stats.insert(0, 5)
+    list_stats.insert(0, 5)      # Hard-code rarity 5 into data
     list_stats.insert(1, name)
 
     list_stats.append(boon.upper())
@@ -31,7 +31,8 @@ def get_heroes_stats():
 def spreadsheet_work(data):
     scope = ['https://spreadsheets.google.com/feeds']
     #scope_string = ' '.join(scope)
-    creds = ServiceAccountCredentials.from_json_keyfile_name('Fire-Emblem-Heroes-2918b0c607c7.json', scope)
+    creds = ServiceAccountCredentials.from_json_keyfile_name(
+        'Fire-Emblem-Heroes-2918b0c607c7.json', scope)
     client = gspread.authorize(creds)
 
     sheet = client.open('Copy of Fire Emblem Heroes Bias Spreadsheet').sheet1

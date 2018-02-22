@@ -2,6 +2,7 @@ import gspread
 import json
 import pprint
 
+from collections import OrderedDict
 from oauth2client.service_account import ServiceAccountCredentials
 
 def main():
@@ -11,16 +12,23 @@ def main():
     boon = input("Boon(default = neutral): ")
     bane = input("bane(default = neutral): ")
     stats = hero_stats(heroes_data, name, boon, bane)
-    pp.pprint(stats)
+    list_stats = list(stats.values())
+    list_stats.insert(0, 5)
+    list_stats.insert(1, name)
+
+    list_stats.append(boon.upper())
+    list_stats.append(bane.upper())
+    pp.pprint(list_stats)
+    spreadsheet_work(list_stats)
 
 def get_heroes_stats():
     json_data = open('stats.json').read()
-    data = json.loads(json_data)
+    data = json.loads(json_data, object_pairs_hook=OrderedDict)
     heroes_data = data['heroes']
     dict_data = {element['name']:element for element in heroes_data}
     return dict_data
 
-def spreadsheet_work():
+def spreadsheet_work(data):
     scope = ['https://spreadsheets.google.com/feeds']
     #scope_string = ' '.join(scope)
     creds = ServiceAccountCredentials.from_json_keyfile_name('Fire-Emblem-Heroes-2918b0c607c7.json', scope)
@@ -29,8 +37,8 @@ def spreadsheet_work():
     sheet = client.open('Copy of Fire Emblem Heroes Bias Spreadsheet').sheet1
 
     pp = pprint.PrettyPrinter()
-    row = ["5", "Test", "1", "2", "3", "4", "5", "6", "7"]
-    index = 6
+    row = data
+    index = 2
     sheet.insert_row(row, index)
 
 def hero_stats(data, name, boon='neutral', bane='neutral'):
@@ -50,6 +58,7 @@ def hero_stats(data, name, boon='neutral', bane='neutral'):
     for k, v in hero_stats.items():
         if type(v) is list:
             hero_stats[k] = v[1]
+
     return hero_stats
 
 if __name__ == '__main__':

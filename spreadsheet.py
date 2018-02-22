@@ -7,7 +7,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 def main():
     pp = pprint.PrettyPrinter()
     heroes_data = get_heroes_stats()
-    stats = hero_stats(heroes_data, 'Abel', 'atk', 'def')
+    stats = hero_stats(heroes_data, 'Abel')
     #stats_max = stats['40']['5']
     #all_attack = stats_max.get('atk')
     #pp.pprint(all_attack[2])
@@ -34,17 +34,18 @@ def spreadsheet_work():
     index = 6
     sheet.insert_row(row, index)
 
-def hero_stats(data, name, boon, bane):
+def hero_stats(data, name, boon='neutral', bane='neutral'):
     hero = data[name]
     hero_stats = hero['stats']['40']['5']
-    boon_hero_stats = hero_stats[boon]
-    bane_hero_stats = hero_stats[bane]
+    if boon and bane != 'neutral':
+        boon_hero_stats = hero_stats[boon]
+        bane_hero_stats = hero_stats[bane]
 
-    # Change stats of Boon and Bane
-    boon_stat = int(boon_hero_stats[2])
-    bane_stat = int(bane_hero_stats[0])
-    hero_stats[boon] = boon_stat
-    hero_stats[bane] = bane_stat
+        # Change stats of Boon and Bane
+        boon_stat = int(boon_hero_stats[2])
+        bane_stat = int(bane_hero_stats[0])
+        hero_stats[boon] = boon_stat
+        hero_stats[bane] = bane_stat
 
     # Rest of the stats Neutral
     for k, v in hero_stats.items():

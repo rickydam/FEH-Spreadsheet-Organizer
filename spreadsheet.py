@@ -40,14 +40,17 @@ class Spreadsheet:
         sheet = client.open(
             'Copy of Fire Emblem Heroes Bias Spreadsheet')
         worksheet = sheet.get_worksheet(0)
+        # Starting cell list is below Rarity
         cell_list = worksheet.range('A' + str(2) + ':' + 'I' + str(y_range))
 
-        data_count = 0
+        row_count = 0
         cell_count = 0
         for cell in cell_list:
-            cell.value = data[data_count][cell_count]
+            cell.value = data[row_count][cell_count]
+            # cell_count can't be greater than 8 because rarity -> bane is
+            # 8 cells (inderx starts at 0)
             if cell_count > 7:
-                data_count += 1
+                row_count += 1
                 cell_count = 0
             else:
                 cell_count += 1

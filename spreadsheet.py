@@ -41,8 +41,7 @@ class Spreadsheet:
             'Copy of Fire Emblem Heroes Bias Spreadsheet')
         worksheet = sheet.get_worksheet(0)
         cell_list = worksheet.range('A' + str(2) + ':' + 'I' + str(y_range))
-        print(cell_list)
-        print(data[2][2])
+
         data_count = 0
         cell_count = 0
         for cell in cell_list:

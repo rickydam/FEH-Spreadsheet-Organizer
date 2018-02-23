@@ -27,10 +27,33 @@ class Spreadsheet:
         sheet = client.open(
             'Copy of Fire Emblem Heroes Bias Spreadsheet').sheet1
 
-        pp = pprint.PrettyPrinter()
         row = data
         index = 2
         sheet.insert_row(row, index)
+
+    def reorganize_spreadsheet(self, data, y_range):
+        scope = ['https://spreadsheets.google.com/feeds']
+        creds = ServiceAccountCredentials.from_json_keyfile_name(
+            'Fire-Emblem-Heroes-2918b0c607c7.json', scope)
+        client = gspread.authorize(creds)
+
+        sheet = client.open(
+            'Copy of Fire Emblem Heroes Bias Spreadsheet')
+        worksheet = sheet.get_worksheet(0)
+        cell_list = worksheet.range('A' + str(2) + ':' + 'I' + str(y_range))
+        print(cell_list)
+        print(data[2][2])
+        data_count = 0
+        cell_count = 0
+        for cell in cell_list:
+            cell.value = data[data_count][cell_count]
+            if cell_count > 7:
+                data_count += 1
+                cell_count = 0
+            else:
+                cell_count += 1
+
+        worksheet.update_cells(cell_list)
 
     def hero_stats(self, data, name, boon='neutral', bane='neutral'):
         hero = data[name]
@@ -51,3 +74,17 @@ class Spreadsheet:
                 hero_stats[k] = v[1]
 
         return hero_stats
+
+    def sort_hero_data(self):
+        scope = ['https://spreadsheets.google.com/feeds']
+        creds = ServiceAccountCredentials.from_json_keyfile_name(
+            'Fire-Emblem-Heroes-2918b0c607c7.json', scope)
+        client = gspread.authorize(creds)
+
+        sheet = client.open(
+            'Copy of Fire Emblem Heroes Bias Spreadsheet')
+        worksheet = sheet.get_worksheet(0)
+
+        records = worksheet.get_all_records()
+        new_record = sorted(records, key=lambda k: k["Heroes"])
+        return new_record

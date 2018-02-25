@@ -1,1 +1,5 @@
-Initialize Git Repo for Fire Emblem Heroes
+#Prerequistes
+Python 3
+
+1) pip install gspread oauth2client
+

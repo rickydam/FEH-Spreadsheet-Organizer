@@ -34,7 +34,7 @@ class Spreadsheet:
     def reorganize_spreadsheet(self, data, y_range):
         scope = ['https://spreadsheets.google.com/feeds']
         creds = ServiceAccountCredentials.from_json_keyfile_name(
-            'Fire-Emblem-Heroes-2918b0c607c7.json', scope)
+            'Fire-Emblem-Heroes-c3b425178e37.json', scope)
         client = gspread.authorize(creds)
 
         sheet = client.open(

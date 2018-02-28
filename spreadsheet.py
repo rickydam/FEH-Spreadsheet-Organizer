@@ -8,6 +8,8 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 class Spreadsheet:
 
+    JSON_KEYFILE = 'Fire-Emblem-Heroes-c3b425178e37.json'
+
     def __init__(self, stats_json):
         self.stats_json = stats_json
 
@@ -21,7 +23,7 @@ class Spreadsheet:
     def spreadsheet_work(self, data):
         scope = ['https://spreadsheets.google.com/feeds']
         creds = ServiceAccountCredentials.from_json_keyfile_name(
-            'Fire-Emblem-Heroes-2918b0c607c7.json', scope)
+            self.JSON_KEYFILE, scope)
         client = gspread.authorize(creds)
 
         sheet = client.open(
@@ -34,7 +36,7 @@ class Spreadsheet:
     def reorganize_spreadsheet(self, data, y_range):
         scope = ['https://spreadsheets.google.com/feeds']
         creds = ServiceAccountCredentials.from_json_keyfile_name(
-            'Fire-Emblem-Heroes-c3b425178e37.json', scope)
+            self.JSON_KEYFILE, scope)
         client = gspread.authorize(creds)
 
         sheet = client.open(
@@ -48,7 +50,7 @@ class Spreadsheet:
         for cell in cell_list:
             cell.value = data[row_count][cell_count]
             # cell_count can't be greater than 8 because rarity -> bane is
-            # 8 cells (inderx starts at 0)
+            # 8 cells (inderx starts at 0)Bias
             if cell_count > 7:
                 row_count += 1
                 cell_count = 0
@@ -80,7 +82,7 @@ class Spreadsheet:
     def sort_hero_data(self):
         scope = ['https://spreadsheets.google.com/feeds']
         creds = ServiceAccountCredentials.from_json_keyfile_name(
-            'Fire-Emblem-Heroes-2918b0c607c7.json', scope)
+            self.JSON_KEYFILE, scope)
         client = gspread.authorize(creds)
 
         sheet = client.open(

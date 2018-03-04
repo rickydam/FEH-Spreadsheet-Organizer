@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup
 import pprint
 import json
 
+base_url = 'https://feheroes.gamepedia.com/'
+heroes_url = base_url + 'Hero_List'
 quote_page = 'https://feheroes.gamepedia.com/Abel'
 page = urllib.request.urlopen(quote_page)
 soup = BeautifulSoup(page, 'html.parser')
@@ -25,3 +27,31 @@ dict_data = {
 }
 
 print(dict_data)
+
+heroes_page = urllib.request.urlopen(heroes_url)
+soup = BeautifulSoup(heroes_page, 'html.parser')
+table = soup.find('table')
+a = table.find_all('a', title=True)
+#something = a.find_all('tr')
+
+hero_list = []
+for element in a:
+    hero_list.append(element['title'])
+
+hero_list = list(filter(None, hero_list))
+
+for element in hero_list:
+    if "Story" in element:
+        hero_list.remove(element)
+    if "Tempest Trials" in element:
+        hero_list.remove(element)
+    if "Category:Legendary Heroes" in element:
+        hero_list.remove(element)
+    if "Category:Special Heroes" in element:
+        hero_list.remove(element)
+    if "Grand Hero Battle" in element:
+        hero_list.remove(element)
+
+hero_list = list(set(hero_list))
+hero_list = sorted(hero_list, key=str.lower)
+print(hero_list)

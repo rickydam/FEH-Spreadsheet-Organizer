@@ -11,6 +11,7 @@ class Scrape:
         self.base_url = 'https://feheroes.gamepedia.com/'
 
     def scrape_hero(self, hero_name):
+        hero_name = hero_name.replace(" ", "_").title()
         hero_url = self.base_url + str(hero_name)
         page = urllib.request.urlopen(hero_url)
         soup = BeautifulSoup(page, 'html.parser')
@@ -20,8 +21,8 @@ class Scrape:
         tables = soup.find_all('table', {'class': 'wikitable default'})
         table = tables[1]
         td = table.find_all('td')
-        data = []
 
+        data = []
         for stat in td:
             data.append(stat.text)
         print(data)
@@ -50,5 +51,6 @@ class Scrape:
             else:
                 dict_data[k] = data[data_index]
                 data_index += 1
-
         print(dict_data)
+
+        return dict_data

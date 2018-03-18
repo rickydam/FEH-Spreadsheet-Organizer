@@ -34,22 +34,23 @@ class Scrape:
             start_index += 1
 
         dict_data = {
-            'name': str(hero_name),
-            'rarity': '',
-            'hp': '',
-            'atk': '',
-            'spd': '',
-            'def': '',
-            'res': '',
-            'bst': ''
+            str(hero_name): {
+                'rarity': '',
+                'hp': '',
+                'atk': '',
+                'spd': '',
+                'def': '',
+                'res': '',
+                'bst': ''
+            }
         }
 
         data_index = start_index
-        for k in dict_data:
+        for k in dict_data[hero_name]:
             if k == 'name':
                 pass
             else:
-                dict_data[k] = data[data_index]
+                dict_data[hero_name][k] = data[data_index]
                 data_index += 1
         print(dict_data)
 

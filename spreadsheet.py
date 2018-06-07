@@ -14,6 +14,9 @@ class Spreadsheet:
         self.stats_json = stats_json
 
     def get_heroes_stats(self):
+        """
+        Get stats of all heroes
+        """
         json_data = open(self.stats_json).read()
         data = json.loads(json_data, object_pairs_hook=OrderedDict)
         heroes_data = data['heroes']
@@ -21,6 +24,9 @@ class Spreadsheet:
         return dict_data
 
     def spreadsheet_work(self, data):
+        """
+        Insert hero into top of spreadsheet
+        """
         scope = ['https://spreadsheets.google.com/feeds']
         creds = ServiceAccountCredentials.from_json_keyfile_name(
             self.JSON_KEYFILE, scope)
@@ -34,6 +40,9 @@ class Spreadsheet:
         sheet.insert_row(row, index)
 
     def reorganize_spreadsheet(self, data, y_range):
+        """
+        Reorganize entire spreadsheeet to be in alphabetical order
+        """
         scope = ['https://spreadsheets.google.com/feeds']
         creds = ServiceAccountCredentials.from_json_keyfile_name(
             self.JSON_KEYFILE, scope)
@@ -60,6 +69,9 @@ class Spreadsheet:
         worksheet.update_cells(cell_list)
 
     def hero_stats(self, data, name, boon='neutral', bane='neutral'):
+        """
+        Get stats of hero with 5 star rarity
+        """
         hero = data[name]
         hero_stats = hero['stats']['40']['5']
         if boon and bane != 'neutral':

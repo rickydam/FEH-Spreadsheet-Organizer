@@ -11,6 +11,16 @@ class Scrape:
         self.base_url = 'https://feheroes.gamepedia.com/'
 
     def scrape_hero(self, hero_name):
+        hero_dict = {}
+        hero_dict = self.disambiguation(hero_name)
+        if hero_dict:
+            choice = input(f"Choose hero from list: {hero_dict}.\n")
+            try:
+                choice = int(choice)
+            except (ValueError, KeyError):
+                print(f"{choice} was not a choice from the list.")
+            hero_name = hero_dict[choice]
+
         hero_name = hero_name.replace(" ", "_").title()
         hero_url = self.base_url + str(hero_name)
         page = urllib.request.urlopen(hero_url)
@@ -86,13 +96,5 @@ class Scrape:
             hero_dict[counter] = hero
             counter += 1
 
-        choice = input(f"Choose hero from list: {hero_dict}.\n")
-        try:
-            choice = int(choice)
-        except (ValueError, KeyError):
-            print(f"{choice} was not a choice from the list.")
-        alt_hero = hero_dict[choice]
-
-        hero_url = alt_hero.replace(" ", "_").title() 
-        self.scrape_hero(hero_url)
+        return hero_dict
 

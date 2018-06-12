@@ -92,6 +92,9 @@ class Spreadsheet:
         return hero_stats
 
     def sort_hero_data(self):
+        """
+        Sort heroes data in Google spreadsheet to be in alphabetical order
+        """
         scope = ['https://spreadsheets.google.com/feeds']
         creds = ServiceAccountCredentials.from_json_keyfile_name(
             self.JSON_KEYFILE, scope)

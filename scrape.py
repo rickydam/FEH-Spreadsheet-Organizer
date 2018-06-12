@@ -55,3 +55,26 @@ class Scrape:
         print(dict_data)
 
         return dict_data
+
+
+    def disambiguation(self, hero_name):
+        hero_name = hero_name.replace(" ", "_").title()
+        hero_url = self.base_url + str(hero_name)
+        page = urllib.request.urlopen(hero_url)
+        soup = BeautifulSoup(page, 'html.parser')
+
+        print(hero_url)
+
+        if soup.find_all('div', attrs={'id': re.compile('disambig')}):
+            print(f"{hero_name} has a disambiguation page, please specify "
+                  f"which alternative {hero_name} you would like to choose.")
+
+        else:
+            print(f"{hero_name} does not have a disambiguation page, exiting.")
+            return
+
+        alt_hero_names = soup.find_all('a', attrs={'title': re.compile(f'^{hero_name}')})
+
+        for link in alt_hero_names:
+            print(link.get('title'))
+

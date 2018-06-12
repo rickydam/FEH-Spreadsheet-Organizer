@@ -92,5 +92,7 @@ class Scrape:
         except (ValueError, KeyError):
             print(f"{choice} was not a choice from the list.")
         alt_hero = hero_dict[choice]
-        print(alt_hero)
+
+        hero_url = alt_hero.replace(" ", "_").title() 
+        self.scrape_hero(hero_url)
 

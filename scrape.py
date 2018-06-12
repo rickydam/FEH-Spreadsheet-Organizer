@@ -12,6 +12,9 @@ class Scrape:
         self.hero_name = None
 
     def scrape_hero(self, hero_name):
+        """
+        Scrape for hero's stats on feheroes wiki
+        """
         hero_dict = {}
         hero_dict = self.disambiguation(hero_name)
         if hero_dict:
@@ -70,6 +73,10 @@ class Scrape:
 
 
     def disambiguation(self, hero_name):
+        """
+        Determine if the hero has alternative selfs from wiki's disambiguation
+        page. If it does, return a dictionary of the hero's alternatives.
+        """
         hero_name = hero_name.replace(" ", "_").title()
         hero_url = self.base_url + str(hero_name)
         page = urllib.request.urlopen(hero_url)
@@ -101,6 +108,10 @@ class Scrape:
         return hero_dict
 
     def data_list(self, data, name):
+        """
+        Create a list of data elements following the FEH stat ordering
+        convention and breaking the bane neutral boon stats into sub-lists
+        """
         list_data = []
         list_data.append(data[name]['rarity'])
         list_data.append(data[name]['hp'])
@@ -118,6 +129,9 @@ class Scrape:
         return new_list
 
     def list_into_dict(self, data):
+        """
+        Assign the list's stats back into dictionary form
+        """
         dict_data = {}
         #dict_data['rarity'] = data[0]
         dict_data['hp'] = data[1]

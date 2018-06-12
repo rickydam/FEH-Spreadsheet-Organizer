@@ -68,12 +68,11 @@ class Spreadsheet:
 
         worksheet.update_cells(cell_list)
 
-    def hero_stats(self, data, name, boon='neutral', bane='neutral'):
+    def hero_stats(self, data, boon='neutral', bane='neutral'):
         """
         Get stats of hero with 5 star rarity
         """
-        hero = data[name.capitalize()]
-        hero_stats = hero['stats']['40']['5']
+        hero_stats = data
         if boon and bane != 'neutral':
             boon_hero_stats = hero_stats[boon]
             bane_hero_stats = hero_stats[bane]
@@ -86,6 +85,7 @@ class Spreadsheet:
 
         # Rest of the stats Neutral
         for k, v in hero_stats.items():
+            print(k, v)
             if type(v) is list:
                 hero_stats[k] = v[1]
 

@@ -9,6 +9,7 @@ class Scrape:
 
     def __init__(self):
         self.base_url = 'https://feheroes.gamepedia.com/'
+        self.hero_name = None
 
     def scrape_hero(self, hero_name):
         hero_dict = {}
@@ -22,6 +23,7 @@ class Scrape:
             hero_name = hero_dict[choice]
 
         hero_name = hero_name.replace(" ", "_").title()
+        self.hero_name = hero_name
         hero_url = self.base_url + str(hero_name)
         page = urllib.request.urlopen(hero_url)
         soup = BeautifulSoup(page, 'html.parser')
@@ -97,4 +99,32 @@ class Scrape:
             counter += 1
 
         return hero_dict
+
+    def data_list(self, data, name):
+        list_data = []
+        list_data.append(data[name]['rarity'])
+        list_data.append(data[name]['hp'])
+        list_data.append(data[name]['atk'])
+        list_data.append(data[name]['spd'])
+        list_data.append(data[name]['def'])
+        list_data.append(data[name]['res'])
+        #list_data.append(data[name]['bst'])
+        print(list_data)
+
+        new_list = []
+        for element in list_data:
+            elem = element.split('/')
+            new_list.append(elem)
+        return new_list
+
+    def list_into_dict(self, data):
+        dict_data = {}
+        #dict_data['rarity'] = data[0]
+        dict_data['hp'] = data[1]
+        dict_data['atk'] = data[2]
+        dict_data['spd'] = data[3]
+        dict_data['def'] = data[4]
+        dict_data['res'] = data[5]
+        print(dict_data)
+        return dict_data
 

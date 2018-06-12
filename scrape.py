@@ -15,8 +15,9 @@ class Scrape:
         """
         Scrape for hero's stats on feheroes wiki
         """
+        self.hero_name = hero_name
         hero_dict = {}
-        hero_dict = self.disambiguation(hero_name)
+        hero_dict = self.disambiguation()
         if hero_dict:
             choice = input(f"Choose hero from list: {hero_dict}.\n")
             try:
@@ -71,27 +72,30 @@ class Scrape:
         return dict_data
 
 
-    def disambiguation(self, hero_name):
+    def disambiguation(self):
         """
         Determine if the hero has alternative selfs from wiki's disambiguation
         page. If it does, return a dictionary of the hero's alternatives.
         """
-        hero_name = hero_name.replace(" ", "_").title()
-        hero_url = self.base_url + str(hero_name)
+        self.hero_name = self.hero_name.replace(" ", "_").title()
+        hero_url = self.base_url + str(self.hero_name)
         page = urllib.request.urlopen(hero_url)
         soup = BeautifulSoup(page, 'html.parser')
 
         print(hero_url)
 
         if soup.find_all('div', attrs={'id': re.compile('disambig')}):
-            print(f"{hero_name} has a disambiguation page, please specify "
-                  f"which alternative {hero_name} you would like to choose.")
+            print(f"{self.hero_name} has a disambiguation page, please "
+                  f"specify which alternative {self.hero_name} you would like "
+                  f"to choose.")
 
         else:
-            print(f"{hero_name} does not have a disambiguation page, exiting.")
+            print(f"{self.hero_name} does not have a disambiguation page, "
+                  f"exiting.")
             return
 
-        alt_hero_names = soup.find_all('a', attrs={'title': re.compile(f'^{hero_name}')})
+        alt_hero_names = soup.find_all(
+            'a', attrs={'title': re.compile(f'^{self.hero_name}')})
 
         hero_list = []
         hero_dict = {}

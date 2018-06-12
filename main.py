@@ -8,7 +8,7 @@ def main():
     pp = pprint.PrettyPrinter()
     spreadsheet_object = spreadsheet.Spreadsheet("stats.json")
     heroes_data = spreadsheet_object.get_heroes_stats()
-    name = input("Name of hero: ")
+    name = input("Name of hero: ").capitalize()
     boon = input("Boon(default = neutral): ")
     bane = input("bane(default = neutral): ")
     stats = spreadsheet_object.hero_stats(heroes_data, name, boon, bane)

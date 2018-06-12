@@ -72,7 +72,7 @@ class Spreadsheet:
         """
         Get stats of hero with 5 star rarity
         """
-        hero = data[name]
+        hero = data[name.capitalize()]
         hero_stats = hero['stats']['40']['5']
         if boon and bane != 'neutral':
             boon_hero_stats = hero_stats[boon]

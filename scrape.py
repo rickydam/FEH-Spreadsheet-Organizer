@@ -75,6 +75,22 @@ class Scrape:
 
         alt_hero_names = soup.find_all('a', attrs={'title': re.compile(f'^{hero_name}')})
 
+        hero_list = []
+        hero_dict = {}
         for link in alt_hero_names:
             print(link.get('title'))
+            hero_list.append(link.get('title'))
+
+        counter = 0
+        for hero in hero_list:
+            hero_dict[counter] = hero
+            counter += 1
+
+        choice = input(f"Choose hero from list: {hero_dict}.\n")
+        try:
+            choice = int(choice)
+        except (ValueError, KeyError):
+            print(f"{choice} was not a choice from the list.")
+        alt_hero = hero_dict[choice]
+        print(alt_hero)
 

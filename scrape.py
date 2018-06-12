@@ -23,11 +23,10 @@ class Scrape:
                 choice = int(choice)
             except (ValueError, KeyError):
                 print(f"{choice} was not a choice from the list.")
-            hero_name = hero_dict[choice]
+            self.hero_name = hero_dict[choice]
 
-        hero_name = hero_name.replace(" ", "_").title()
-        self.hero_name = hero_name
-        hero_url = self.base_url + str(hero_name)
+        self.hero_name = self.hero_name.replace(" ", "_").title()
+        hero_url = self.base_url + str(self.hero_name)
         page = urllib.request.urlopen(hero_url)
         soup = BeautifulSoup(page, 'html.parser')
 
@@ -49,7 +48,7 @@ class Scrape:
             start_index += 1
 
         dict_data = {
-            str(hero_name): {
+            str(self.hero_name): {
                 'rarity': '',
                 'hp': '',
                 'atk': '',
@@ -61,11 +60,11 @@ class Scrape:
         }
 
         data_index = start_index
-        for k in dict_data[hero_name]:
+        for k in dict_data[self.hero_name]:
             if k == 'name':
                 pass
             else:
-                dict_data[hero_name][k] = data[data_index]
+                dict_data[self.hero_name][k] = data[data_index]
                 data_index += 1
         print(dict_data)
 

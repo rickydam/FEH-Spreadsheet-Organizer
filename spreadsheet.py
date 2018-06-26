@@ -27,7 +27,8 @@ class Spreadsheet:
         """
         Insert hero into top of spreadsheet
         """
-        scope = ['https://spreadsheets.google.com/feeds']
+        scope = ['https://spreadsheets.google.com/feeds',
+                 'https://www.googleapis.com/auth/drive']
         creds = ServiceAccountCredentials.from_json_keyfile_name(
             self.JSON_KEYFILE, scope)
         client = gspread.authorize(creds)
@@ -43,7 +44,8 @@ class Spreadsheet:
         """
         Reorganize entire spreadsheeet to be in alphabetical order
         """
-        scope = ['https://spreadsheets.google.com/feeds']
+        scope = ['https://spreadsheets.google.com/feeds',
+                 'https://www.googleapis.com/auth/drive']
         creds = ServiceAccountCredentials.from_json_keyfile_name(
             self.JSON_KEYFILE, scope)
         client = gspread.authorize(creds)
@@ -95,7 +97,8 @@ class Spreadsheet:
         """
         Sort heroes data in Google spreadsheet to be in alphabetical order
         """
-        scope = ['https://spreadsheets.google.com/feeds']
+        scope = ['https://spreadsheets.google.com/feeds',
+                 'https://www.googleapis.com/auth/drive']
         creds = ServiceAccountCredentials.from_json_keyfile_name(
             self.JSON_KEYFILE, scope)
         client = gspread.authorize(creds)

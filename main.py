@@ -23,7 +23,7 @@ def main():
     list_stats.append(boon.upper())
     list_stats.append(bane.upper())
     pp.pprint(list_stats)
-    spreadsheet_object.spreadsheet_work(list_stats)
+    spreadsheet_object.insert_hero(list_stats)
 
 
 if __name__ == '__main__':

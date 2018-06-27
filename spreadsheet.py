@@ -23,7 +23,7 @@ class Spreadsheet:
         dict_data = {element['name']: element for element in heroes_data}
         return dict_data
 
-    def spreadsheet_work(self, data):
+    def insert_hero(self, data):
         """
         Insert hero into top of spreadsheet
         """

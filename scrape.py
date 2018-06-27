@@ -28,10 +28,9 @@ class Scrape:
 
         self.hero_name = self.hero_name.replace(" ", "_").title()
         hero_url = self.base_url + str(self.hero_name)
+        print(f"Web scraping {self.hero_name} at: {hero_url}")
         page = urllib.request.urlopen(hero_url)
         soup = BeautifulSoup(page, 'html.parser')
-
-        print(hero_url)
 
         tables = soup.find_all('table', {'class': 'wikitable default'})
         table = tables[1]
@@ -82,7 +81,7 @@ class Scrape:
         page = urllib.request.urlopen(hero_url)
         soup = BeautifulSoup(page, 'html.parser')
 
-        print(hero_url)
+        print(f"Web scraping {self.hero_name} at: {hero_url}")
 
         if soup.find_all('div', attrs={'id': re.compile('disambig')}):
             print(f"{self.hero_name} has a disambiguation page, please "

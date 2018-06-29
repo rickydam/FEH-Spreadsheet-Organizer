@@ -26,7 +26,7 @@ class Scrape:
                 print(f"{choice} was not a choice from the list.")
             self.hero_name = hero_dict[choice]
 
-        self.hero_name = self.hero_name.replace(" ", "_").title()
+        self.hero_name = self.hero_name.replace(" ", "_")
         hero_url = self.base_url + str(self.hero_name)
         print(f"Web scraping {self.hero_name} at: {hero_url}")
         page = urllib.request.urlopen(hero_url)
